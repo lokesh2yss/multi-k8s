@@ -1,0 +1,45 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "lokesh2yss/multi-client",
+      "hostname": "client",
+      "essential": false
+    },
+    {
+      "name": "server",
+      "image": "lokesh2yss/multi-server",
+      "hostname": "api",
+      "essential": false
+    },
+    {
+      "name": "worker",
+      "image": "lokesh2yss/multi-worker",
+      "hostname": "worker",
+      "essential": false
+    },
+    {
+      "name": "postgres",
+      "image": "lokesh2yss/multi-postgres",
+      "hostname": "postgres",
+      "essential": false
+    },
+    {
+       "name" : "nginx",
+       "image": "lokesh2yss/multi-nginx",
+       "hostname": "nginx",
+       "essential": true,
+       "portMappings": [
+         {
+ 	  "hostPort": 80,
+          "containerPort": 80
+         }
+       ],
+       "links": ["client","server"]
+        
+    }
+
+  ]
+
+}
