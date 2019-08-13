@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t lokesh2yss/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true lokesh2yss/react-test npm test
+
+after_success:
+  - docker build -t lokesh2yss/multi-client ./client
+  - docker build -t lokesh2yss/multi-nginx ./nginx
+  - docker build -t lokesh2yss/multi-server ./server
+  - docker build -t lokesh2yss/multi-postgres ./postgres
+  - docker build -t lokesh2yss/multi-worker ./worker
+  #Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to dockerhub
+  - docker push lokesh2yss/multi-client
+  - docker push lokesh2yss/multi-nginx
+  - docker push lokesh2yss/multi-server
+  - docker push lokesh2yss/multi-postgres
+  - docker push lokesh2yss/multi-worker
+
