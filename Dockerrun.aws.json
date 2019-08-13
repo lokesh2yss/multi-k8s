@@ -3,6 +3,13 @@
   "containerDefinitions": [
     
     {
+      "name": "redis-server",
+      "image": "lokesh2yss/multi-redis-server",
+      "hostname": "redis-server",
+      "essential": false,
+      "memory": 128
+    },
+    {
       "name": "postgres",
       "image": "lokesh2yss/multi-postgres",
       "hostname": "postgres",
@@ -22,14 +29,15 @@
       "hostname": "api",
       "essential": false,
       "memory": 128,
-      "links": ["postgres"]
+      "links": ["postgres","redis-server"]
     },
     {
       "name": "worker",
       "image": "lokesh2yss/multi-worker",
       "hostname": "worker",
       "essential": false,
-      "memory": 128
+      "memory": 128,      
+      "links": ["redis-server"]
     },
     {
        "name" : "nginx",

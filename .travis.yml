@@ -14,9 +14,11 @@ after_success:
   - docker build -t lokesh2yss/multi-server ./server
   - docker build -t lokesh2yss/multi-postgres ./postgres
   - docker build -t lokesh2yss/multi-worker ./worker
+  - docker build -t lokesh2yss/multi-redis-server ./redis-server
   #Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to dockerhub
+  - docker push lokesh2yss/multi-redis-server
   - docker push lokesh2yss/multi-client
   - docker push lokesh2yss/multi-nginx
   - docker push lokesh2yss/multi-server
